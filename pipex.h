@@ -11,5 +11,7 @@
 # include <sys/wait.h>
 
 void	ft_putsrt_fd(const char *str, int fd);
+size_t	ft_strlen(const char *s);
+void	error(const char *funcname);
 
 #endif

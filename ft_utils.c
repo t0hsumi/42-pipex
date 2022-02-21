@@ -1,5 +1,4 @@
 #include "pipex.h"
-#include <cstddef>
 
 size_t	ft_strlen(const char *s)
 {
@@ -19,5 +18,11 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	len = ft_strlen(s);
 	write(fd, s, len);
+}
+
+void	error(const char *funcname)
+{
+	perror(funcname);
+	exit(EXIT_FAILURE);
 }
 
