@@ -1,5 +1,15 @@
 #include "pipex.h"
 
+/* check status of child2 process and set exit status, output error (if there is a signal) */
+void	parent_process(int pipefd[2], pid_t child2)
+{
+	int	wstatus;
+
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(child2, &wstatus, 0);
+}
+
 void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
 {
 	dup2(pipefd[1], STDOUT_FILENO);
@@ -16,6 +26,7 @@ void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp)
 	execute(argv[3], envp);
 }
 
+/* maybe dont have to check status of child1 */
 void	ft_pipex(int infile, int outfile, char **argv, char **envp)
 {
 	int		pipefd[2];
@@ -23,7 +34,7 @@ void	ft_pipex(int infile, int outfile, char **argv, char **envp)
 	pid_t	child2;
 	int		wstatus;
 
-	if (pipe(pipedf) == -1)
+	if (pipe(pipefd) == -1)
 		error("pipe");
 	child1 = fork();
 	if (child1 < 0)
@@ -38,14 +49,11 @@ void	ft_pipex(int infile, int outfile, char **argv, char **envp)
 		waitpid(child1, &wstatus, 0);
 		launch_cmd2(outfile, pipefd, argv, envp);
 	}
-	close(pipefd[0]);
-	close(pipefd[1]);
-	waitpid(child2, &wstatus, 0);
+	parent_process(pipefd, child2);
 }
 
 int main(int argc, char **argv, char **envp)
 {
-	int		pipefd[2];
 	int		infile;
 	int		outfile;
 
