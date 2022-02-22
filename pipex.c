@@ -27,7 +27,7 @@ void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp)
 }
 
 /* maybe dont have to check status of child1 */
-void	ft_pipex(int infile, int outfile, char **argv, char **envp)
+void	pipex(int infile, int outfile, char **argv, char **envp)
 {
 	int		pipefd[2];
 	pid_t	child1;
@@ -63,7 +63,7 @@ int main(int argc, char **argv, char **envp)
 		outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (infile < 0 || outfile < 0)
 			error("open");
-		ft_pipex(infile, outfile, argv, envp);
+		pipex(infile, outfile, argv, envp);
 	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2", 2);
