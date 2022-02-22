@@ -1,6 +1,7 @@
 #include "ft_pipex.h"
 
-/* check status of child2 process and set exit status, output error (if there is a signal) */
+/* check status of child2 process and exit status,
+ * output error (if there is a signal) */
 void	parent_process(int pipefd[2], pid_t child2)
 {
 	int	wstatus;
@@ -8,8 +9,22 @@ void	parent_process(int pipefd[2], pid_t child2)
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(child2, &wstatus, 0);
+	if (WIFSIGNALED(wstatus))
+	{
+		if (WTERMSIG(wstatus) == SIGSEGV)
+			ft_putstr_fd("Segmentation fault: 11\n", 2);
+		else if (WTERMSIG(wstatus) == SIGABRT)
+			ft_putstr_fd("Abort trap: 6\n", 2);
+		else if (WTERMSIG(wstatus) == SIGBUS)
+			ft_putstr_fd("Bus error: 10\n", 2);
+		else
+			ft_putstr_fd("Unknown signal detected\n", 2);
+		if (WIFEXITED(wstatus))
+			exit(WEXITSTATUS(wstatus));
+	}
 }
 
+/* infile -> cmd1 -> pipefd[1] */
 void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
 {
 	dup2(pipefd[1], STDOUT_FILENO);
@@ -18,6 +33,7 @@ void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
 	execute(argv[2], envp);
 }
 
+/* pipefd[0] -> cmd2 -> outfile */
 void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp)
 {
 	dup2(pipefd[0], STDIN_FILENO);
@@ -52,7 +68,8 @@ void	pipex(int infile, int outfile, char **argv, char **envp)
 	parent_process(pipefd, child2);
 }
 
-int main(int argc, char **argv, char **envp)
+/* check cmdline arg and stop in case of error */
+int	main(int argc, char **argv, char **envp)
 {
 	int		infile;
 	int		outfile;
