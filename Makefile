@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 DEBUG = # -g -fsanitize=address
 
-SRCS = ft_pipex.c
+SRCS = ft_pipex.c ft_split.c ft_utils.c
 OBJS = $(SRCS:.c=.o)
 
 B_SRCS = ft_pipex_bonus.c

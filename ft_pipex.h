@@ -9,6 +9,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <stdio.h>
 
 void	ft_putstr_fd(const char *str, int fd);
 size_t	ft_strlen(const char *s);

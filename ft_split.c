@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "ft_pipex.h"
 
 static char	*ft_strndp(const char *s1, size_t n)
 {

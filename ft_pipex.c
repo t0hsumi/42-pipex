@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "ft_pipex.h"
 
 /* check status of child2 process and set exit status, output error (if there is a signal) */
 void	parent_process(int pipefd[2], pid_t child2)

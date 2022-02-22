@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "ft_pipex.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -87,7 +87,7 @@ void	execute(char *argv, char **envp)
 	char	*path;
 	int		i;
 
-	cmd = ft_splie(argv, ' ');
+	cmd = ft_split(argv, ' ');
 	if (!cmd)
 		error("malloc");
 	path = search_path(cmd[0], envp);
@@ -113,7 +113,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(const char *s, int fd)
 {
 	size_t	len;
 
