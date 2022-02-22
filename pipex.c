@@ -1,13 +1,53 @@
 #include "pipex.h"
 
+void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
+{
+	dup2(pipefd[1], STDOUT_FILENO);
+	dup2(infile, STDIN_FILENO);
+	close(pipefd[0]);
+	execute(argv[2], envp);
+}
+
+void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp)
+{
+	dup2(pipefd[0], STDIN_FILENO);
+	dup2(outfile, STDOUT_FILENO);
+	close(pipefd[1]);
+	execute(argv[3], envp);
+}
+
+void	ft_pipex(int infile, int outfile, char **argv, char **envp)
+{
+	int		pipefd[2];
+	pid_t	child1;
+	pid_t	child2;
+	int		wstatus;
+
+	if (pipe(pipedf) == -1)
+		error("pipe");
+	child1 = fork();
+	if (child1 < 0)
+		error("fork");
+	if (child1 == 0)
+		launch_cmd1(infile, pipefd, argv, envp);
+	child2 = fork();
+	if (child2 < 0)
+		error("fork");
+	if (child2 == 0)
+	{
+		waitpid(child1, &wstatus, 0);
+		launch_cmd2(outfile, pipefd, argv, envp);
+	}
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(child2, &wstatus, 0);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	int		pipefd[2];
 	int		infile;
 	int		outfile;
-	pid_t	child1;
-	pid_t	child2;
-	int		wstatus;
 
 	if (argc == 5)
 	{
@@ -15,26 +55,7 @@ int main(int argc, char **argv, char **envp)
 		outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (infile < 0 || outfile < 0)
 			error("open");
-		if (pipe(pipedf) == -1)
-			error("pipe");
-		child1 = fork();
-		if (child1 < 0)
-			error("fork");
-		if (child1 == 0)
-		{
-			launch_cmd1();
-		}
-		child2 = fork();
-		if (child2 < 0)
-			error("fork");
-		if (child2 == 0)
-		{
-			launch_cmd2();
-		}
-		close(pipefd[0]);
-		close(pipefd[1]);
-		waitpid(child1, &wstatus, 0);
-		waitpid(child2, &wstatus, 0);
+		ft_pipex(infile, outfile, argv, envp);
 	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2", 2);
