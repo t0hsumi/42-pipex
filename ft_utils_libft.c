@@ -55,5 +55,6 @@ void	ft_putstr_fd(const char *s, int fd)
 	if (!s)
 		return ;
 	len = ft_strlen(s);
-	write(fd, s, len);
+	if (write(fd, s, len) < 0)
+		error("write");
 }

@@ -7,8 +7,8 @@ void	parent_process(int pipefd[2], pid_t child2)
 {
 	int	wstatus;
 
-	close(pipefd[0]);
-	close(pipefd[1]);
+	if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
+		error("open");
 	waitpid(child2, &wstatus, 0);
 	if (WIFSIGNALED(wstatus))
 	{
@@ -33,11 +33,10 @@ void	launch_cmd1(int pipefd[2], char **argv, char **envp)
 	infile = open(argv[1], O_RDONLY);
 	if (infile < 0)
 		error("open");
-	dup2(pipefd[1], STDOUT_FILENO);
-	dup2(infile, STDIN_FILENO);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	close(infile);
+	if (dup2(pipefd[1], STDOUT_FILENO) < 0 || dup2(infile, STDIN_FILENO) < 0)
+		error("dup2");
+	if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0 || close(infile) < 0)
+		error("close");
 	execute(argv[2], envp);
 }
 
@@ -48,12 +47,11 @@ void	launch_cmd2(int pipefd[2], char **argv, char **envp)
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
+		error("open");
+	if (dup2(pipefd[0], STDIN_FILENO) < 0 || dup2(outfile, STDOUT_FILENO) < 0)
+		error("dup2");
+	if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0 || close(outfile) < 0)
 		error("close");
-	dup2(pipefd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	close(outfile);
 	execute(argv[3], envp);
 }
 
