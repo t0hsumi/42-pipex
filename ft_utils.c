@@ -1,21 +1,27 @@
 #include "ft_pipex.h"
 
-static char	*make_cmd_path(char *env, char *cmd)
+static char	*make_cmd_path(char **env, int check_index, char *cmd)
 {
 	char	*tmp;
 	char	*res;
+	int		i;
 
-	tmp = ft_strjoin(env, "/");
-	if (!tmp)
-		error("malloc");
+	tmp = ft_strjoin(env[check_index], "/");
 	res = ft_strjoin(tmp, cmd);
-	free(tmp);
-	if (!res)
+	if (!res || !tmp)
+	{
+		free(res);
+		free(tmp);
+		i = 0;
+		while (env[i])
+			free(env[i++]);
+		free(env);
 		error("malloc");
+	}
 	return (res);
 }
 
-static char	*search_path(char *cmd, char **envp)
+static char	*search_path(char **cmd, char **envp)
 {
 	int		i;
 	char	**env_path;
@@ -24,15 +30,15 @@ static char	*search_path(char *cmd, char **envp)
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
-	if (envp[i] == NULL)
-		no_path_case(cmd, envp);
+	/* if (envp[i] == NULL) */
+	/* 	no_path_case(cmd, envp); */
 	env_path = ft_split(envp[i] + 5, ':');
-	if (!env_path)
+	if (!env_path) // to do free cmd
 		error("malloc");
 	i = 0;
 	while (env_path[i])
 	{
-		path = make_cmd_path(env_path[i], cmd);
+		path = make_cmd_path(env_path, i, cmd[0]);
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);
@@ -54,7 +60,7 @@ void	execute(char *argv, char **envp)
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
 		error("malloc");
-	path = search_path(cmd[0], envp);
+	path = search_path(cmd, envp);
 	if (!path)
 	{
 		i = 0;
