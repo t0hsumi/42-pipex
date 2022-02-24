@@ -18,8 +18,8 @@ int	g_cmd_status;
 enum
 {
 	Executable = 1,
-	CommandNotFound,
-	NoSuchFile
+	PermissionDenied,
+	NoSuchFileOrDir
 };
 
 /* ft_utils.c */
@@ -30,6 +30,7 @@ void	execute(char *argv, char **envp);
 void	ft_putstr_fd(const char *str, int fd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s1);
 
 /* ft_pipex.c */
 void	pipex(char **argv, char **envp);

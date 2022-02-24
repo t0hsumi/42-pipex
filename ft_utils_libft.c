@@ -58,3 +58,18 @@ void	ft_putstr_fd(const char *s, int fd)
 	if (write(fd, s, len) < 0)
 		error("write");
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = (char *)malloc(ft_strlen(s1) + 1);
+	if (!ptr)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		ptr[i] = s1[i];
+	ptr[i] = '\0';
+	return (ptr);
+}
