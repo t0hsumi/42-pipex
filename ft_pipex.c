@@ -1,5 +1,4 @@
 #include "ft_pipex.h"
-#include <fcntl.h>
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
