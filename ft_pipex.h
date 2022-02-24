@@ -23,9 +23,9 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 /* ft_pipex.c */
-void	pipex(int infile, int outfile, char **argv, char **envp);
-void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp);
-void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp);
+void	pipex(char **argv, char **envp);
+void	launch_cmd1(int pipefd[2], char **argv, char **envp);
+void	launch_cmd2(int pipefd[2], char **argv, char **envp);
 void	parent_process(int pipefd[2], pid_t child2);
 
 /* ft_split.c */

@@ -26,7 +26,7 @@ void	parent_process(int pipefd[2], pid_t child2)
 }
 
 /* infile -> cmd1 -> pipefd[1] */
-void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
+void	launch_cmd1(int pipefd[2], char **argv, char **envp)
 {
 	int	infile;
 
@@ -42,7 +42,7 @@ void	launch_cmd1(int infile, int pipefd[2], char **argv, char **envp)
 }
 
 /* pipefd[0] -> cmd2 -> outfile */
-void	launch_cmd2(int outfile, int pipefd[2], char **argv, char **envp)
+void	launch_cmd2(int pipefd[2], char **argv, char **envp)
 {
 	int	outfile;
 
@@ -86,17 +86,8 @@ void	pipex(char **argv, char **envp)
 /* check cmdline arg and stop in case of error */
 int	main(int argc, char **argv, char **envp)
 {
-	/* int		infile; */
-	/* int		outfile; */
-
 	if (argc == 5)
-	{
-		/* infile = open(argv[1], O_RDONLY); */
-		/* outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); */
-		/* if (infile < 0 || outfile < 0) */
-		/* 	error("open"); */
 		pipex(argv, envp);
-	}
 	else
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2", 2);
 	return (0);
