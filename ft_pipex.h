@@ -13,6 +13,15 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+int	g_cmd_status;
+
+enum
+{
+	Executable = 1,
+	CommandNotFound,
+	NoSuchFile
+};
+
 /* ft_utils.c */
 void	error(const char *funcname);
 void	execute(char *argv, char **envp);

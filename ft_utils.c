@@ -36,6 +36,7 @@ static char	*search_path(char **cmd, char **envp)
 	char	*path;
 
 	i = 0;
+	/* todo cmd[0] is already full path case */
 	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	/* if (envp[i] == NULL) */
