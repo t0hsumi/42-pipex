@@ -1,14 +1,11 @@
 NAME = pipex
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 DEBUG = # -g -fsanitize=address
 
-SRCS = ft_pipex.c ft_split.c ft_utils.c
+SRCS = ft_pipex.c ft_split.c ft_utils.c ft_utils_libft.c
 OBJS = $(SRCS:.c=.o)
-
-B_SRCS = ft_pipex_bonus.c
-B_OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
