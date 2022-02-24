@@ -24,6 +24,8 @@ static char	*search_path(char *cmd, char **envp)
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
+	if (envp[i] == NULL)
+		no_path_case(cmd, envp);
 	env_path = ft_split(envp[i] + 5, ':');
 	if (!env_path)
 		error("malloc");
