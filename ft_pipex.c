@@ -2,12 +2,13 @@
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
-void	parent_process(int pipefd[2], pid_t child2)
+void	parent_process(int pipefd[2], pid_t child1, pid_t child2)
 {
 	int	wstatus;
 
 	if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
 		error("open");
+	waitpid(child1, &wstatus, 0);
 	waitpid(child2, &wstatus, 0);
 	if (WIFSIGNALED(wstatus))
 	{
@@ -61,7 +62,6 @@ void	pipex(char **argv, char **envp)
 	int		pipefd[2];
 	pid_t	child1;
 	pid_t	child2;
-	int		wstatus;
 
 	if (pipe(pipefd) == -1)
 		error("pipe");
@@ -76,12 +76,9 @@ void	pipex(char **argv, char **envp)
 		if (child2 < 0)
 			error("fork");
 		else if (child2 == 0)
-		{
-			waitpid(child1, &wstatus, 0);
 			launch_cmd2(pipefd, argv, envp);
-		}
 		else
-			parent_process(pipefd, child2);
+			parent_process(pipefd, child1, child2);
 	}
 }
 

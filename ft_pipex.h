@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 17:41:49 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/25 21:24:01 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_putstr_fd(const char *str, int fd);
 char	*ft_strdup(const char *s1);
 
 /* ft_pipex.c */
-void	parent_process(int pipefd[2], pid_t child2);
+void	parent_process(int pipefd[2], pid_t child1, pid_t child2);
 void	launch_cmd1(int pipefd[2], char **argv, char **envp);
 void	launch_cmd2(int pipefd[2], char **argv, char **envp);
 void	pipex(char **argv, char **envp);
