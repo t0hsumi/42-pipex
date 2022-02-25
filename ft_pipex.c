@@ -91,6 +91,9 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 5)
 		pipex(argv, envp);
 	else
+	{
 		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 2);
+		return (1);
+	}
 	return (0);
 }

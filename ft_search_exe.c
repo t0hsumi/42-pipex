@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:41 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 12:29:41 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/25 17:41:49 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	is_full_path_cmd(char **cmd, char **path)
 	if (g_cmd_status == Executable)
 	{
 		*path = ft_strdup(cmd[0]);
-		if (!path)
+		if (!*path)
 			free_err("malloc", cmd);
 		return (1);
 	}
@@ -68,8 +68,9 @@ static char	*search_path(char **cmd, char **envp)
 	char	*path;
 
 	i = 0;
-	if (is_full_path_cmd(cmd, &path))
-		return (path);
+	if (!ft_strncmp(cmd[0], ".", 1) || !ft_strncmp(cmd[0], "/", 1))
+		if (is_full_path_cmd(cmd, &path))
+			return (path);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (envp[i] == NULL)
@@ -104,10 +105,10 @@ void	execute(char *argv, char **envp)
 		free_2d_array(cmd);
 		exit(126);
 	}
-	else if (g_cmd_status == NoSuchFileOrDir)
+	else if (g_cmd_status == CommandNotFound)
 	{
 		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 		free_2d_array(cmd);
 		exit(127);
 	}

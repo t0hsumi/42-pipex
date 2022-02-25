@@ -1,0 +1,5 @@
+NAME = pipex
+all: $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(NAME)
+	rm -f $(NAME)

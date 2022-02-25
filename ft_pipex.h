@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 12:29:42 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/25 17:41:49 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	g_cmd_status;
 
 enum
 {
+	CommandNotFound,
 	Executable = 1,
 	PermissionDenied,
-	NoSuchFileOrDir
 };
 
 /* ft_utils.c */
