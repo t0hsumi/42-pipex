@@ -2,7 +2,7 @@ NAME = pipex
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-DEBUG = # -g -fsanitize=address
+DEBUG = # -g -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"# -fsanitize=address
 
 SRCS = ft_pipex.c ft_split.c ft_utils.c ft_utils_libft.c ft_search_exe.c
 OBJS = $(SRCS:.c=.o)

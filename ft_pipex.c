@@ -19,8 +19,7 @@ void	parent_process(int pipefd[2], pid_t child2)
 			ft_putstr_fd("Bus error: 10\n", 2);
 		else
 			ft_putstr_fd("Unknown signal detected\n", 2);
-		if (WIFEXITED(wstatus))
-			exit(WEXITSTATUS(wstatus));
+		exit(WTERMSIG(wstatus) + 128);
 	}
 	if (WIFEXITED(wstatus))
 		exit(WEXITSTATUS(wstatus));
