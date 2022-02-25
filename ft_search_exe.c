@@ -91,8 +91,9 @@ void	execute(char *argv, char **envp)
 	}
 	else if (g_cmd_status == NoSuchFileOrDir)
 	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		free_2d_array(cmd);
-		ft_putstr_fd("command not found\n", 2);
 		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
