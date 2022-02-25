@@ -22,6 +22,8 @@ void	parent_process(int pipefd[2], pid_t child2)
 		if (WIFEXITED(wstatus))
 			exit(WEXITSTATUS(wstatus));
 	}
+	if (WIFEXITED(wstatus))
+		exit(WEXITSTATUS(wstatus));
 }
 
 /* infile -> cmd1 -> pipefd[1] */

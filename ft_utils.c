@@ -97,13 +97,13 @@ void	execute(char *argv, char **envp)
 	{
 		free_2d_array(cmd);
 		ft_putstr_fd("command : Permission denied\n", 2);
-		exit(EXIT_FAILURE);
+		exit(126);
 	}
 	else if (g_cmd_status == NoSuchFileOrDir)
 	{
 		free_2d_array(cmd);
 		ft_putstr_fd("command not found\n", 2);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
 		error("execve");
