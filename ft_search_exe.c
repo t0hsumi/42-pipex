@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_search_exe.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/25 12:29:41 by tohsumi           #+#    #+#             */
+/*   Updated: 2022/02/25 12:29:41 by tohsumi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_pipex.h"
 
 static char	*make_cmd_path(char **env, int check_index, char **cmd)
@@ -19,15 +31,6 @@ static char	*make_cmd_path(char **env, int check_index, char **cmd)
 	return (res);
 }
 
-static int	check_cmd_status(char *path)
-{
-	if (access(path, X_OK) == 0)
-		return (Executable);
-	else if (access(path, F_OK) == 0)
-		return (PermissionDenied);
-	return (NoSuchFileOrDir);
-}
-
 static int	is_path(char **env_path, int index, char **cmd, char **path)
 {
 	int	cmd_status;
@@ -45,6 +48,19 @@ static int	is_path(char **env_path, int index, char **cmd, char **path)
 	return (0);
 }
 
+static int	is_full_path_cmd(char **cmd, char **path)
+{
+	g_cmd_status = check_cmd_status(cmd[0]);
+	if (g_cmd_status == Executable)
+	{
+		*path = ft_strdup(cmd[0]);
+		if (!path)
+			free_err("malloc", cmd);
+		return (1);
+	}
+	return (0);
+}
+
 static char	*search_path(char **cmd, char **envp)
 {
 	int		i;
@@ -52,14 +68,8 @@ static char	*search_path(char **cmd, char **envp)
 	char	*path;
 
 	i = 0;
-	g_cmd_status = check_cmd_status(cmd[0]);
-	if (g_cmd_status == Executable)
-	{
-		path = ft_strdup(cmd[0]);
-		if (!path)
-			free_err("malloc", cmd);
+	if (is_full_path_cmd(cmd, &path))
 		return (path);
-	}
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (envp[i] == NULL)

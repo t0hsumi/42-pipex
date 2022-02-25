@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
+/*   Updated: 2022/02/25 12:29:42 by tohsumi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PIPEX_H
 # define FT_PIPEX_H
 
@@ -26,6 +38,7 @@ enum
 void	free_2d_array(char **str);
 void	free_err(const char *funcname, char **str);
 void	error(const char *funcname);
+int		check_cmd_status(char *path);
 
 /* ft_search_exe.c */
 void	execute(char *argv, char **envp);
