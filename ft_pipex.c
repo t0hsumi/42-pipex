@@ -68,17 +68,21 @@ void	pipex(char **argv, char **envp)
 	child1 = fork();
 	if (child1 < 0)
 		error("fork");
-	if (child1 == 0)
+	else if (child1 == 0)
 		launch_cmd1(pipefd, argv, envp);
-	child2 = fork();
-	if (child2 < 0)
-		error("fork");
-	if (child2 == 0)
+	else
 	{
-		waitpid(child1, &wstatus, 0);
-		launch_cmd2(pipefd, argv, envp);
+		child2 = fork();
+		if (child2 < 0)
+			error("fork");
+		else if (child2 == 0)
+		{
+			waitpid(child1, &wstatus, 0);
+			launch_cmd2(pipefd, argv, envp);
+		}
+		else
+			parent_process(pipefd, child2);
 	}
-	parent_process(pipefd, child2);
 }
 
 /* check cmdline arg and stop in case of error */
