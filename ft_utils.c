@@ -10,6 +10,12 @@ void	free_2d_array(char **str)
 	free(str);
 }
 
+void	free_err(const char *funcname, char **str)
+{
+	free_2d_array(str);
+	error(funcname);
+}
+
 void	error(const char *funcname)
 {
 	perror(funcname);

@@ -28,10 +28,26 @@ static int	check_cmd_status(char *path)
 	return (NoSuchFileOrDir);
 }
 
+static int	is_path(char **env_path, int index, char **cmd, char **path)
+{
+	int	cmd_status;
+
+	*path = make_cmd_path(env_path, index, cmd);
+	cmd_status = check_cmd_status(*path);
+	if (cmd_status == Executable)
+	{
+		g_cmd_status = Executable;
+		free_2d_array(env_path);
+		return (1);
+	}
+	else if (cmd_status == PermissionDenied)
+		g_cmd_status = PermissionDenied;
+	return (0);
+}
+
 static char	*search_path(char **cmd, char **envp)
 {
 	int		i;
-	int		cmd_status;
 	char	**env_path;
 	char	*path;
 
@@ -41,7 +57,7 @@ static char	*search_path(char **cmd, char **envp)
 	{
 		path = ft_strdup(cmd[0]);
 		if (!path)
-			error("malloc");
+			free_err("malloc", cmd);
 		return (path);
 	}
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
@@ -50,25 +66,13 @@ static char	*search_path(char **cmd, char **envp)
 		return (NULL);
 	env_path = ft_split(envp[i] + 5, ':');
 	if (!env_path)
+		free_err("malloc", cmd);
+	i = -1;
+	while (env_path[++i])
 	{
-		free_2d_array(cmd);
-		error("malloc");
-	}
-	i = 0;
-	while (env_path[i])
-	{
-		path = make_cmd_path(env_path, i, cmd);
-		cmd_status = check_cmd_status(path);
-		if (cmd_status == Executable)
-		{
-			g_cmd_status = cmd_status;
-			free_2d_array(env_path);
+		if (is_path(env_path, i, cmd, &path))
 			return (path);
-		}
-		else if (cmd_status == PermissionDenied)
-			g_cmd_status = PermissionDenied;
 		free(path);
-		i++;
 	}
 	free_2d_array(env_path);
 	return (NULL);
@@ -85,8 +89,9 @@ void	execute(char *argv, char **envp)
 	path = search_path(cmd, envp);
 	if (g_cmd_status == PermissionDenied)
 	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
 		free_2d_array(cmd);
-		ft_putstr_fd("command : Permission denied\n", 2);
 		exit(126);
 	}
 	else if (g_cmd_status == NoSuchFileOrDir)

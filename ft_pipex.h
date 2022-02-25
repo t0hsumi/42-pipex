@@ -24,6 +24,7 @@ enum
 
 /* ft_utils.c */
 void	free_2d_array(char **str);
+void	free_err(const char *funcname, char **str);
 void	error(const char *funcname);
 
 /* ft_search_exe.c */
