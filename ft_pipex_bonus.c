@@ -34,8 +34,6 @@ pid_t	launch_cmd(char *argv, char **envp)
 
 	if (pipe(pipefd) == -1)
 		error("pipe");
-	if (dup2(pipefd[0], STDIN_FILENO) < 0)
-		error("dup2");
 	child = fork();
 	if (child < 0)
 		error("fork");
@@ -82,7 +80,7 @@ pid_t	launch_last_cmd(char *argv, char **envp, int outfile)
 
 void	here_doc(char *limiter)
 {
-	int	pipefd[2];
+	int		pipefd[2];
 	char	*line;
 	pid_t	child;
 
@@ -118,10 +116,10 @@ void	here_doc(char *limiter)
 /* check cmdline arg and stop in case of error */
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
-	int	j;
-	int	infile;
-	int	outfile;
+	int		i;
+	int		j;
+	int		infile;
+	int		outfile;
 	pid_t	master_child;
 	pid_t	*processes;
 
@@ -129,7 +127,7 @@ int	main(int argc, char **argv, char **envp)
 		usage_error();
 	else
 	{
-		if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0) 
+		if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 		{
 			i = 2;
 			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -165,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			j = argc - 2;
-			if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0) 
+			if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 				j--;
 			processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
 			parent_process(processes, j);
