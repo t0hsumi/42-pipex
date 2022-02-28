@@ -7,7 +7,7 @@ void	parent_process(int pipefd[2], pid_t child1, pid_t child2)
 	int	wstatus;
 
 	if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
-		error("open");
+		error("close");
 	waitpid(child1, &wstatus, 0);
 	waitpid(child2, &wstatus, 0);
 	if (WIFSIGNALED(wstatus))
