@@ -86,7 +86,12 @@ void	pipex(char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc >= 5)
+	{
 		pipex(argv, envp);
+		/* if (ft_strcmp(argv[1], "here_doc") == 0) */ 
+		/* 	break ; */
+		/* else */
+	}
 	else
 		usage_error();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/28 11:49:45 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 12:11:15 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ void	pipex(char **argv, char **envp);
 
 /* ft_split.c */
 char	**ft_split(char const *s, char c);
+
+/* ft_pipex_utils_bonus.c */
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
