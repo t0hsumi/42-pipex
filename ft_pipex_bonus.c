@@ -1,5 +1,4 @@
 #include "ft_pipex_bonus.h"
-#include <unistd.h>
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
@@ -93,14 +92,23 @@ void	here_doc(char *limiter)
 		error("fork");
 	else if (child == 0)
 	{
-		close(pipefd[0]);
-		
+		if (close(pipefd[0]) < 0)
+			error("close");
+		line = get_next_line(0);
+		while (line)
+		{
+			if (ft_strcmp(line, limiter) == 0)
+				exit(EXIT_SUCCESS);
+			write(pipefd[1], line, ft_strlen(line));
+			free(line);
+			line = get_next_line(0);
+		}
 	}
 	else
 	{
-		if (dup2(fd[0], STDIN_FILENO) < 0)
+		if (dup2(pipefd[0], STDIN_FILENO) < 0)
 			error("dup2");
-		if (close(fd[0]) < 0 || close(fd[1]) < 0)
+		if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
 			error("close");
 		waitpid(child, NULL, 0);
 	}

@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/28 14:11:41 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 17:46:51 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "get_next_line.h"
 
 int	g_cmd_status;
 
@@ -45,7 +46,6 @@ void	usage_error(void);
 void	execute(char *argv, char **envp);
 
 /* ft_utils_libft_bonus.c */
-char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(const char *str, int fd);
 char	*ft_strdup(const char *s1);
