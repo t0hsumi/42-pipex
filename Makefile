@@ -23,6 +23,7 @@ bonus: $(B_OBJS)
 
 clean:
 	rm -f $(OBJS)
+	rm -f $(B_OBJS)
 
 fclean: clean
 	rm -f $(NAME)

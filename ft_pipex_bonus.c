@@ -1,4 +1,4 @@
-#include "ft_pipex.h"
+#include "ft_pipex_bonus.h"
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
@@ -85,12 +85,9 @@ void	pipex(char **argv, char **envp)
 /* check cmdline arg and stop in case of error */
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc == 5)
+	if (argc >= 5)
 		pipex(argv, envp);
 	else
-	{
-		ft_putstr_fd("Usage: ./pipex file1 cmd1 cmd2 file2\n", 2);
-		return (1);
-	}
+		usage_error();
 	return (0);
 }

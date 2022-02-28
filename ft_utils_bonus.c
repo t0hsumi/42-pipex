@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   ft_utils_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:41 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 17:39:50 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 11:54:32 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_pipex_bonus.h"
 
 void	free_2d_array(char **str)
 {
@@ -41,4 +41,12 @@ int	check_cmd_status(char *path)
 	else if (access(path, F_OK) == 0)
 		return (PermissionDenied);
 	return (CommandNotFound);
+}
+
+void	usage_error(void)
+{
+	ft_putstr_fd("Error: Bad argument\n", 2);
+	ft_putstr_fd("Ex: ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2\n", 2);
+	ft_putstr_fd("    ./pipex here_doc LIMITER cmd1 ... cmdn file2\n", 2);
+	exit(EXIT_FAILURE);
 }

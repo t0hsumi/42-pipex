@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_pipex_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 21:24:01 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 11:49:45 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#ifndef FT_PIPEX_BONUS_H
+# define FT_PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <sys/stat.h>
@@ -39,6 +39,7 @@ void	free_2d_array(char **str);
 void	free_err(const char *funcname, char **str);
 void	error(const char *funcname);
 int		check_cmd_status(char *path);
+void	usage_error(void);
 
 /* ft_search_exe.c */
 void	execute(char *argv, char **envp);

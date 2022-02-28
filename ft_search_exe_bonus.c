@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_search_exe.c                                    :+:      :+:    :+:   */
+/*   ft_search_exe_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:41 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/25 17:41:49 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 11:50:15 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_pipex_bonus.h"
 
 static char	*make_cmd_path(char **env, int check_index, char **cmd)
 {
