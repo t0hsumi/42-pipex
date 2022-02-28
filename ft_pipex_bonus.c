@@ -2,14 +2,14 @@
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
-void	parent_process(pid_t *children)
+void	parent_process(pid_t *children, int len)
 {
 	int	wstatus;
 	int	i;
 
 	i = 0;
-	while (children[i])
-		waitpid(children[i], &wstatus, 0);
+	while (i <= len)
+		waitpid(children[i++], &wstatus, 0);
 	if (WIFSIGNALED(wstatus))
 	{
 		if (WTERMSIG(wstatus) == SIGSEGV)
@@ -130,7 +130,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (ft_strcmp(argv[1], "here_doc") == 0) 
 		{
-			i = 3;
+			i = 2;
 			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (outfile < 0)
 				error("open");
@@ -141,7 +141,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			i = 2;
+			i = 1;
 			infile = open(argv[1], O_RDONLY, 0644);
 			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (infile < 0 || outfile < 0)
@@ -158,13 +158,16 @@ int	main(int argc, char **argv, char **envp)
 			error("fork");
 		else if (master_child == 0)
 		{
-			while (i < argc - 2)
-				processes[j++] = launch_cmd(argv[i++], envp);
+			while (++i < argc - 2)
+				processes[j++] = launch_cmd(argv[i], envp);
 		}
 		else
 		{
-			processes[j] = launch_last_cmd(argv[i], envp, outfile);
-			parent_process(processes);
+			j = argc - 2;
+			if (ft_strcmp(argv[1], "here_doc") == 0) 
+				j--;
+			processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
+			parent_process(processes, j);
 		}
 	}
 }

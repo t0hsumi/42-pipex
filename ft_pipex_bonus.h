@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/28 17:46:51 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 18:12:55 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_putstr_fd(const char *str, int fd);
 char	*ft_strdup(const char *s1);
 
 /* ft_pipex_bonus.c */
-void	parent_process(pid_t *childlen);
+void	parent_process(pid_t *childlen, int len);
 pid_t	launch_cmd(char *argv, char **envp);
 
 /* ft_split_bonus.c */
