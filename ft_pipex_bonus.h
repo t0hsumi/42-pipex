@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/28 18:12:55 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 19:25:59 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,5 @@ pid_t	launch_cmd(char *argv, char **envp);
 
 /* ft_split_bonus.c */
 char	**ft_split(char const *s, char c);
-
-/* ft_pipex_utils_bonus.c */
-int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

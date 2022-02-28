@@ -7,7 +7,7 @@ DEBUG = # -g -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address"# -fsanitize=address
 SRCS = ft_pipex.c ft_split.c ft_utils.c ft_utils_libft.c ft_search_exe.c
 OBJS = $(SRCS:.c=.o)
 
-B_SRCS = ft_pipex_bonus.c ft_split_bonus.c ft_utils_bonus.c ft_utils_libft_bonus.c ft_search_exe_bonus.c ft_pipex_utils_bonus.c \
+B_SRCS = ft_pipex_bonus.c ft_split_bonus.c ft_utils_bonus.c ft_utils_libft_bonus.c ft_search_exe_bonus.c \
 		 get_next_line.c get_next_line_utils.c
 B_OBJS = $(B_SRCS:.c=.o)
 
@@ -31,4 +31,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+re_bonus: fclean bonus
+
+.PHONY: all clean fclean re bonus re_bonus

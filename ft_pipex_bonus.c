@@ -97,7 +97,7 @@ void	here_doc(char *limiter)
 		line = get_next_line(0);
 		while (line)
 		{
-			if (ft_strcmp(line, limiter) == 0)
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				exit(EXIT_SUCCESS);
 			write(pipefd[1], line, ft_strlen(line));
 			free(line);
@@ -124,11 +124,11 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	master_child;
 	pid_t	*processes;
 
-	if (argc < 5 || (!ft_strcmp(argv[1], "here_doc") && argc == 5))
+	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) && argc == 5))
 		usage_error();
 	else
 	{
-		if (ft_strcmp(argv[1], "here_doc") == 0) 
+		if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0) 
 		{
 			i = 2;
 			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -152,19 +152,19 @@ int	main(int argc, char **argv, char **envp)
 			if (!processes)
 				error("malloc");
 		}
-		j = 0;
+		j = -1;
 		master_child = fork();
 		if (master_child < 0)
 			error("fork");
 		else if (master_child == 0)
 		{
 			while (++i < argc - 2)
-				processes[j++] = launch_cmd(argv[i], envp);
+				processes[++j] = launch_cmd(argv[i], envp);
 		}
 		else
 		{
 			j = argc - 2;
-			if (ft_strcmp(argv[1], "here_doc") == 0) 
+			if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0) 
 				j--;
 			processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
 			parent_process(processes, j);
