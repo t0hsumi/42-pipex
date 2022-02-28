@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/02/28 12:11:15 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/02/28 14:11:41 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,27 @@ enum
 	PermissionDenied,
 };
 
-/* ft_utils.c */
+/* ft_utils_bonus.c */
 void	free_2d_array(char **str);
 void	free_err(const char *funcname, char **str);
 void	error(const char *funcname);
 int		check_cmd_status(char *path);
 void	usage_error(void);
 
-/* ft_search_exe.c */
+/* ft_search_exe_bonus.c */
 void	execute(char *argv, char **envp);
 
-/* ft_utils_libft.c */
+/* ft_utils_libft_bonus.c */
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(const char *str, int fd);
 char	*ft_strdup(const char *s1);
 
-/* ft_pipex.c */
-void	parent_process(int pipefd[2], pid_t child1, pid_t child2);
-void	launch_cmd1(int pipefd[2], char **argv, char **envp);
-void	launch_cmd2(int pipefd[2], char **argv, char **envp);
-void	pipex(char **argv, char **envp);
+/* ft_pipex_bonus.c */
+void	parent_process(pid_t *childlen);
+pid_t	launch_cmd(char *argv, char **envp);
 
-/* ft_split.c */
+/* ft_split_bonus.c */
 char	**ft_split(char const *s, char c);
 
 /* ft_pipex_utils_bonus.c */
