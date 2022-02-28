@@ -10,6 +10,7 @@ void	parent_process(pid_t *children, int len)
 	i = 0;
 	while (i <= len)
 		waitpid(children[i++], &wstatus, 0);
+	free(children);
 	if (WIFSIGNALED(wstatus))
 	{
 		if (WTERMSIG(wstatus) == SIGSEGV)
