@@ -120,7 +120,6 @@ int	main(int argc, char **argv, char **envp)
 	int		j;
 	int		infile;
 	int		outfile;
-	pid_t	master_child;
 	pid_t	*processes;
 
 	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) && argc == 5))
@@ -152,21 +151,9 @@ int	main(int argc, char **argv, char **envp)
 				error("malloc");
 		}
 		j = -1;
-		master_child = fork();
-		if (master_child < 0)
-			error("fork");
-		else if (master_child == 0)
-		{
-			while (++i < argc - 2)
-				processes[++j] = launch_cmd(argv[i], envp);
-		}
-		else
-		{
-			j = argc - 2;
-			if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
-				j--;
-			processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
-			parent_process(processes, j);
-		}
+		while (++i < argc - 2)
+			processes[++j] = launch_cmd(argv[i], envp);
+		processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
+		parent_process(processes, j);
 	}
 }
