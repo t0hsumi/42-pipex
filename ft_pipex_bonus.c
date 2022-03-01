@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/01 23:31:08 by tohsumi           #+#    #+#             */
+/*   Updated: 2022/03/02 00:03:06 by tohsumi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_pipex_bonus.h"
-#include <unistd.h>
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
@@ -89,31 +100,25 @@ void	here_doc(char *limiter)
 	char	*line;
 	pid_t	child;
 
-	if (pipe(pipefd) < 0)
-		error("pipe");
-	child = fork();
-	if (child < 0)
-		error("fork");
-	else if (child == 0)
+	xpipe(pipefd);
+	child = xfork();
+	if (child == 0)
 	{
-		if (close(pipefd[0]) < 0)
-			error("close");
-		line = get_next_line(0);
-		while (line)
+		xclose(pipefd[0]);
+		while (1)
 		{
+			line = get_next_line(0);
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				exit(EXIT_SUCCESS);
 			write(pipefd[1], line, ft_strlen(line));
 			free(line);
-			line = get_next_line(0);
 		}
 	}
 	else
 	{
-		if (dup2(pipefd[0], STDIN_FILENO) < 0)
-			error("dup2");
-		if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
-			error("close");
+		xdup2(pipefd[0], STDIN_FILENO);
+		xclose(pipefd[0]);
+		xclose(pipefd[1]);
 		waitpid(child, NULL, 0);
 	}
 }
@@ -135,9 +140,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 		{
 			i = 2;
-			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (outfile < 0)
-				error("open");
+			outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			processes = (pid_t *)malloc(sizeof(pid_t) * (argc - 4));
 			if (!processes)
 				error("malloc");
@@ -146,12 +149,9 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			i = 1;
-			infile = open(argv[1], O_RDONLY, 0644);
-			outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (infile < 0 || outfile < 0)
-				error("open");
-			if (dup2(infile, STDIN_FILENO) < 0)
-				error("dup2");
+			infile = xopen(argv[1], O_RDONLY, 0644);
+			outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			xdup2(infile, STDIN_FILENO);
 			processes = (pid_t *)malloc(sizeof(pid_t) * (argc - 3));
 			if (!processes)
 				error("malloc");
