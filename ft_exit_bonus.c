@@ -1,5 +1,4 @@
 #include "ft_pipex_bonus.h"
-#include <sys/_types/_mode_t.h>
 
 void	xpipe(int pipefd[2])
 {

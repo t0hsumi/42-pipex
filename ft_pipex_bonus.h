@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/01 23:58:41 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/02 00:14:13 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(const char *str, int fd);
 char	*ft_strdup(const char *s1);
 
-/* ft_pipex_bonus.c */
-void	parent_process(pid_t *childlen, int len);
-pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev);
-pid_t	launch_last_cmd(char *argv, char **envp, int outfile, int *pipe_prev);
-
 /* ft_split_bonus.c */
 char	**ft_split(char const *s, char c);
 
-/* ft_bonus.c */
+/* ft_exit_bonus.c */
 void	xpipe(int pipefd[2]);
 pid_t	xfork(void);
 void	xdup2(int oldfd, int newfd);
 void	xclose(int fd);
 int		xopen(char *pathname, int flags, mode_t mode);
+
+/* ft_launch_check_cmd_bonus.c */
+void	parent_process(pid_t *childlen, int len);
+pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev);
+pid_t	launch_last_cmd(char *argv, char **envp, int outfile, int *pipe_prev);
 
 #endif
