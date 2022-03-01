@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/01 11:02:44 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/01 11:49:11 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "get_next_line.h"
+# include "get_next_line_bonus.h"
 
 int	g_cmd_status;
 
@@ -53,6 +53,7 @@ char	*ft_strdup(const char *s1);
 /* ft_pipex_bonus.c */
 void	parent_process(pid_t *childlen, int len);
 pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev);
+pid_t	launch_last_cmd(char *argv, char **envp, int outfile, int *pipe_prev);
 
 /* ft_split_bonus.c */
 char	**ft_split(char const *s, char c);
