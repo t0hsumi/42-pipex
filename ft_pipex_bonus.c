@@ -40,7 +40,8 @@ pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev)
 		error("fork");
 	else if (child == 0)
 	{
-		if (dup2(pipefd[1], STDOUT_FILENO) < 0 || dup2(*pipe_prev, STDIN_FILENO) < 0)
+		if (dup2(pipefd[1], STDOUT_FILENO) < 0
+			|| dup2(*pipe_prev, STDIN_FILENO) < 0)
 			error("dup2");
 		if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
 			error("close");
@@ -48,7 +49,8 @@ pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev)
 	}
 	else
 	{
-		if (close(pipefd[1]) < 0 || (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
+		if (close(pipefd[1]) < 0
+			|| (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
 			error("close");
 		*pipe_prev = pipefd[0];
 	}
@@ -64,15 +66,18 @@ pid_t	launch_last_cmd(char *argv, char **envp, int outfile, int *pipe_prev)
 		error("fork");
 	else if (child == 0)
 	{
-		if (dup2(outfile, STDOUT_FILENO) < 0 || dup2(*pipe_prev, STDIN_FILENO) < 0)
+		if (dup2(outfile, STDOUT_FILENO) < 0
+			|| dup2(*pipe_prev, STDIN_FILENO) < 0)
 			error("dup2");
-		if (close(outfile) < 0 || (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
+		if (close(outfile) < 0
+			|| (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
 			error("close");
 		execute(argv, envp);
 	}
 	else
 	{
-		if (close(outfile) < 0 || (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
+		if (close(outfile) < 0
+			|| (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
 			error("close");
 	}
 	return (child);
