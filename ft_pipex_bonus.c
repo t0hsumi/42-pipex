@@ -1,4 +1,5 @@
 #include "ft_pipex_bonus.h"
+#include <unistd.h>
 
 /* check status of child2 process and exit status,
  * output error (if there is a signal) */
@@ -27,7 +28,7 @@ void	parent_process(pid_t *children, int len)
 		exit(WEXITSTATUS(wstatus));
 }
 
-pid_t	launch_cmd(char *argv, char **envp)
+pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev)
 {
 	int		pipefd[2];
 	pid_t	child;
@@ -39,7 +40,7 @@ pid_t	launch_cmd(char *argv, char **envp)
 		error("fork");
 	else if (child == 0)
 	{
-		if (dup2(pipefd[1], STDOUT_FILENO) < 0)
+		if (dup2(pipefd[1], STDOUT_FILENO) < 0 || dup2(*pipe_prev, STDIN_FILENO) < 0)
 			error("dup2");
 		if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
 			error("close");
@@ -49,8 +50,9 @@ pid_t	launch_cmd(char *argv, char **envp)
 	{
 		if (dup2(pipefd[0], STDIN_FILENO) < 0)
 			error("dup2");
-		if (close(pipefd[0]) < 0 || close(pipefd[1]) < 0)
+		if (close(pipefd[1]) < 0 || (*pipe_prev != STDIN_FILENO && close(*pipe_prev) < 0))
 			error("close");
+		*pipe_prev = pipefd[0];
 	}
 	return (child);
 }
@@ -121,6 +123,7 @@ int	main(int argc, char **argv, char **envp)
 	int		infile;
 	int		outfile;
 	pid_t	*processes;
+	int		pipe_prev;
 
 	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) && argc == 5))
 		usage_error();
@@ -151,9 +154,10 @@ int	main(int argc, char **argv, char **envp)
 				error("malloc");
 		}
 		j = -1;
+		pipe_prev = STDIN_FILENO;
 		while (++i < argc - 2)
-			processes[++j] = launch_cmd(argv[i], envp);
-		processes[j] = launch_last_cmd(argv[argc - 2], envp, outfile);
+			processes[++j] = launch_cmd(argv[i], envp, &pipe_prev);
+		processes[++j] = launch_last_cmd(argv[argc - 2], envp, outfile);
 		parent_process(processes, j);
 	}
 }
