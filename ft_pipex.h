@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 13:52:26 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:14:30 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-
-int	g_cmd_status;
 
 enum
 {
