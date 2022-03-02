@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:31:08 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 00:22:08 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/02 09:11:00 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	pipex(int argc, char **argv, char **envp)
 	{
 		i = 2;
 		outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		processes = (pid_t *)malloc(sizeof(pid_t) * (argc - 4));
-		if (!processes)
-			error("malloc");
+		processes = (pid_t *)xmalloc(sizeof(pid_t) * (argc - 4));
 		here_doc(argv[2]);
 	}
 	else
@@ -66,9 +64,7 @@ void	pipex(int argc, char **argv, char **envp)
 		outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		xdup2(infile, STDIN_FILENO);
 		// xclose(infile);
-		processes = (pid_t *)malloc(sizeof(pid_t) * (argc - 3));
-		if (!processes)
-			error("malloc");
+		processes = (pid_t *)xmalloc(sizeof(pid_t) * (argc - 3));
 	}
 	j = -1;
 	pipe_prev = STDIN_FILENO;

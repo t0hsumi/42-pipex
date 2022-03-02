@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 00:14:13 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/02 09:10:22 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ pid_t	xfork(void);
 void	xdup2(int oldfd, int newfd);
 void	xclose(int fd);
 int		xopen(char *pathname, int flags, mode_t mode);
+
+/* ft_exit2_bonus.c */
+void	*xmalloc(size_t size);
 
 /* ft_launch_check_cmd_bonus.c */
 void	parent_process(pid_t *childlen, int len);
