@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:31:08 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 13:52:25 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:00:56 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,18 @@ void	here_doc(char *limiter)
 	}
 }
 
-void	pipex(int argc, char **argv, char **envp)
+void	pipex(int argc, char **argv, char **envp, int pipe_prev)
 {
 	int		i;
 	int		j;
 	int		infile;
 	int		outfile;
 	pid_t	*processes;
-	int		pipe_prev;
 
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 	{
 		i = 2;
 		outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		processes = (pid_t *)xmalloc(sizeof(pid_t) * (argc - 4));
 		here_doc(argv[2]);
 	}
 	else
@@ -63,11 +61,9 @@ void	pipex(int argc, char **argv, char **envp)
 		infile = xopen(argv[1], O_RDONLY, 0644);
 		outfile = xopen(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		xdup2(infile, STDIN_FILENO);
-		// xclose(infile);
-		processes = (pid_t *)xmalloc(sizeof(pid_t) * (argc - 3));
 	}
+	processes = (pid_t *)xmalloc(sizeof(pid_t) * (argc - 2 - i));
 	j = -1;
-	pipe_prev = STDIN_FILENO;
 	while (++i < argc - 2)
 		processes[++j] = launch_cmd(argv[i], envp, &pipe_prev);
 	processes[++j] = launch_last_cmd(argv[argc - 2], envp, outfile, &pipe_prev);
@@ -77,9 +73,14 @@ void	pipex(int argc, char **argv, char **envp)
 /* check cmdline arg and stop in case of error */
 int	main(int argc, char **argv, char **envp)
 {
+	int	pipe_prev;
+
 	if (argc < 5
 		|| (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) && argc == 5))
 		usage_error();
 	else
-		pipex(argc, argv, envp);
+	{
+		pipe_prev = STDIN_FILENO;
+		pipex(argc, argv, envp, pipe_prev);
+	}
 }
