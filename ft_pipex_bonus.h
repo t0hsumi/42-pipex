@@ -6,7 +6,7 @@
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:42 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 14:14:40 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/08 12:19:59 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,8 @@ void	*xmalloc(size_t size);
 void	parent_process(pid_t *childlen, int len);
 pid_t	launch_cmd(char *argv, char **envp, int *pipe_prev);
 pid_t	launch_last_cmd(char *argv, char **envp, int outfile, int *pipe_prev);
+
+/* ft_strchr_bonus.c */
+char	*ft_strchr(const char *s, int chr);
 
 #endif
