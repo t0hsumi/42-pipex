@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_search_exe.c                                    :+:      :+:    :+:   */
+/*   ft_search_exe_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tohsumi <tohsumi@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 12:29:41 by tohsumi           #+#    #+#             */
-/*   Updated: 2022/03/02 14:11:11 by tohsumi          ###   ########.fr       */
+/*   Updated: 2022/03/08 11:54:46 by tohsumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static char	*search_path(char **cmd, char **envp, int *cmd_status)
 	char	*path;
 
 	i = 0;
-	if (!ft_strncmp(cmd[0], ".", 1) || !ft_strncmp(cmd[0], "/", 1))
+	if (!ft_strncmp(cmd[0], "./", 2) || !ft_strncmp(cmd[0], "/", 1)
+		|| !ft_strncmp(cmd[0], "../", 3))
 		if (is_full_path_cmd(cmd, &path, cmd_status))
 			return (path);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
